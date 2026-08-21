@@ -1,0 +1,57 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Source {
+  id         String    @id @default(cuid())
+  url        String?
+  type       String
+  legitimite String
+  createdAt  DateTime  @default(now())
+  articles   Article[]
+}
+
+model Article {
+  id                String          @id @default(cuid())
+  sourceId          String
+  source            Source          @relation(fields: [sourceId], references: [id])
+  titre             String
+  categorie         String
+  dossier           String
+  interet           String
+  valeurAjoutee     String
+  republicationJson String
+  embedding         String?
+  humeur            String?
+  humeurSynthese    String?
+  tags              TagOnArticle[]
+  reactions         Reaction[]
+  createdAt         DateTime        @default(now())
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id])
+  contenu   String
+  createdAt DateTime @default(now())
+}
+
+model Tag {
+  id       String         @id @default(cuid())
+  nom      String         @unique
+  articles TagOnArticle[]
+}
+
+model TagOnArticle {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id])
+  tag       Tag     @relation(fields: [tagId], references: [id])
+
+  @@id([articleId, tagId])
+}
