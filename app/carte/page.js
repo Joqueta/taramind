@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 const DOSSIER_COLORS = [
-    "#7C6FEF", "#5FCF9C", "#E9A23B", "#EF6F8E", "#4FB8D9", "#C77CE9", "#EFB25F",
+    "#754437", "#28374a", "#6b7c4f", "#b08a3e", "#4a6670", "#9c5b4a", "#5c4a6b", "#8a8567",
 ];
 
 function colorFor(dossier, palette) {
@@ -82,29 +82,29 @@ export default function CartePage() {
         <main className="min-h-screen px-6 py-12 md:px-16 md:py-20">
             <Link
                 href="/"
-                className="mb-8 inline-block text-sm text-[var(--text-muted)] transition hover:text-[var(--accent)]"
+                className="focus-mark mb-10 inline-block text-sm text-[var(--paper-dim)] transition hover:text-[var(--paper)]"
             >
                 ← Retour aux dossiers
             </Link>
 
-            <h1 className="font-display mb-2 text-4xl font-semibold">Carte sémantique</h1>
-            <p className="mb-8 max-w-lg text-sm text-[var(--text-muted)]">
+            <h1 className="hero-title mb-3 text-4xl font-bold md:text-5xl">Carte sémantique</h1>
+            <p className="mb-10 max-w-lg text-sm text-[var(--paper-dim)]">
                 Chaque point est un article, positionné selon son sens. Les articles proches par
                 le sujet se regroupent naturellement.
             </p>
 
-            <form onSubmit={handleSearch} className="mb-8 flex max-w-lg gap-2">
+            <form onSubmit={handleSearch} className="mb-10 flex max-w-lg gap-1">
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Rechercher dans la base…"
-                    className="flex-1 rounded-full border border-[var(--border)] bg-[var(--bg-elevated)] px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                    className="focus-mark flex-1 bg-[var(--surface)] px-4 py-3 text-sm text-[var(--azul)] placeholder:text-[var(--azul-dim)]"
                 />
                 <button
                     type="submit"
                     disabled={searching}
-                    className="rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50"
+                    className="focus-mark bg-[var(--terra)] px-5 py-3 text-sm font-medium uppercase tracking-wide text-[var(--paper)] transition hover:bg-[var(--azul)] disabled:opacity-50"
                 >
                     {searching ? "…" : "Chercher"}
                 </button>
@@ -112,7 +112,7 @@ export default function CartePage() {
                     <button
                         type="button"
                         onClick={() => { setQuery(""); setScores(null); }}
-                        className="rounded-full border border-[var(--border)] px-4 py-2.5 text-sm text-[var(--text-muted)] transition hover:text-[var(--text)]"
+                        className="focus-mark bg-[var(--surface-dim)] px-4 py-3 text-sm text-[var(--azul-dim)] transition hover:text-[var(--azul)]"
                     >
                         Effacer
                     </button>
@@ -120,17 +120,17 @@ export default function CartePage() {
             </form>
 
             {loading ? (
-                <p className="text-sm text-[var(--text-muted)]">Calcul de la carte…</p>
+                <p className="text-sm text-[var(--paper-dim)]">Calcul de la carte…</p>
             ) : points.length === 0 ? (
-                <p className="text-sm text-[var(--text-muted)]">
+                <p className="text-sm text-[var(--paper-dim)]">
                     Aucun article avec embedding pour l&apos;instant.
                 </p>
             ) : (
                 <div className="flex flex-col gap-6 lg:flex-row">
                     <svg
                         viewBox={`0 0 ${VIEW} ${VIEW}`}
-                        className="w-full max-w-[640px] rounded-2xl border border-[var(--border)]"
-                        style={{ background: "var(--bg-elevated)" }}
+                        className="w-full max-w-[640px]"
+                        style={{ background: "var(--surface)" }}
                     >
                         {points.map((p) => {
                             const { cx, cy } = project(p.x, p.y);
@@ -144,9 +144,9 @@ export default function CartePage() {
                                     cy={cy}
                                     r={r}
                                     fill={colorFor(p.dossier, dossiers)}
-                                    opacity={scores ? (active ? 0.95 : 0.12) : 0.85}
-                                    stroke={hovered === p.id ? "#fff" : "none"}
-                                    strokeWidth={1.5}
+                                    opacity={scores ? (active ? 0.95 : 0.12) : 0.9}
+                                    stroke={hovered === p.id ? "var(--azul)" : "none"}
+                                    strokeWidth={2}
                                     onMouseEnter={() => setHovered(p.id)}
                                     onMouseLeave={() => setHovered(null)}
                                     style={{ cursor: "pointer", transition: "r 0.3s ease, opacity 0.3s ease" }}
@@ -160,10 +160,10 @@ export default function CartePage() {
                             {dossiers.map((d) => (
                                 <span
                                     key={d}
-                                    className="flex items-center gap-1.5 text-xs text-[var(--text-muted)]"
+                                    className="flex items-center gap-1.5 text-xs text-[var(--paper-dim)]"
                                 >
                                     <span
-                                        className="h-2 w-2 rounded-full"
+                                        className="h-2.5 w-2.5"
                                         style={{ background: colorFor(d, dossiers) }}
                                     />
                                     {d}
@@ -172,18 +172,18 @@ export default function CartePage() {
                         </div>
 
                         {hovered && (
-                            <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] p-4">
+                            <div className="bg-[var(--surface)] p-5">
                                 {(() => {
                                     const p = points.find((pt) => pt.id === hovered);
                                     if (!p) return null;
                                     return (
                                         <>
-                                            <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
+                                            <p className="text-xs uppercase tracking-wide text-[var(--azul-dim)]">
                                                 {p.dossier}
                                             </p>
-                                            <p className="font-display mt-1 text-sm">{p.titre}</p>
+                                            <p className="font-display mt-1 text-sm font-bold text-[var(--azul)]">{p.titre}</p>
                                             {scores?.[p.id] !== undefined && (
-                                                <p className="mt-2 text-xs text-[var(--accent)]">
+                                                <p className="mt-2 text-xs font-medium text-[var(--terra)]">
                                                     Pertinence : {(scores[p.id] * 100).toFixed(1)}%
                                                 </p>
                                             )}

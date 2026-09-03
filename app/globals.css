@@ -1,14 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #12121a;
-  --bg-elevated: #191924;
-  --accent: #7c6fef;
-  --accent-soft: rgba(124, 111, 239, 0.16);
-  --text: #edebf7;
-  --text-muted: #8b87a3;
-  --success: #5fcf9c;
-  --border: rgba(139, 135, 163, 0.16);
+  /* Direction artistique — Verde Opaco / Areia / Terra Queimada / Azul */
+  --bg: #6b6751;
+  --surface: #d3c7ad;
+  --surface-dim: #c4b696;
+  --paper: #f5f0e2;
+  --paper-dim: rgba(245, 240, 226, 0.62);
+  --terra: #754437;
+  --terra-dim: rgba(117, 68, 55, 0.6);
+  --azul: #28374a;
+  --azul-dim: rgba(40, 55, 74, 0.6);
+
+  /* Statuts — palette terreuse dédiée, distincte des deux accents de marque */
+  --ok: #55734f;
+  --ok-soft: #7c8f5e;
+  --warn: #b08a3e;
+  --bad: #a5573f;
+  --bad-soft: #7c2e22;
+  --neutral: #6e6a5c;
 }
 
 * {
@@ -17,20 +27,32 @@
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  color: var(--paper);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Zéro arrondi, zéro bordure : la structure vient des aplats et du vide. */
+input,
+select,
+textarea,
+button {
+  border: none;
+  border-radius: 0;
+  outline: none;
+  font-family: inherit;
 }
 
 .font-display {
-  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
 }
 
-.glow-node {
-  box-shadow: 0 0 0 1px var(--border);
-  transition: box-shadow 0.25s ease, transform 0.2s ease;
+.hero-title {
+  font-family: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
 }
 
-.glow-node:hover {
-  transform: translateY(-2px);
+.focus-mark:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 2px;
 }

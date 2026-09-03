@@ -45,20 +45,20 @@ export default function CapturePage() {
         <main className="min-h-screen px-6 py-12 md:px-16 md:py-20">
             <Link
                 href="/"
-                className="mb-8 inline-block text-sm text-[var(--text-muted)] transition hover:text-[var(--accent)]"
+                className="focus-mark mb-10 inline-block text-sm text-[var(--paper-dim)] transition hover:text-[var(--paper)]"
             >
                 ← Retour aux dossiers
             </Link>
 
-            <h1 className="font-display mb-2 text-4xl font-semibold">Capturer une source</h1>
-            <p className="mb-10 max-w-lg text-sm text-[var(--text-muted)]">
+            <h1 className="hero-title mb-3 text-4xl font-bold md:text-5xl">Capturer une source</h1>
+            <p className="mb-12 max-w-lg text-sm text-[var(--paper-dim)]">
                 Colle un article, une vidéo, un post, ou une idée attrapée à la volée. L&apos;agent
                 s&apos;occupe de qualifier, ranger et proposer une republication.
             </p>
 
-            <form onSubmit={handleSubmit} className="flex max-w-xl flex-col gap-5">
-                <div>
-                    <label className="mb-1.5 block text-xs uppercase tracking-wide text-[var(--text-muted)]">
+            <form onSubmit={handleSubmit} className="flex max-w-xl flex-col gap-1">
+                <div className="bg-[var(--surface)] p-5">
+                    <label className="mb-2 block text-xs uppercase tracking-wide text-[var(--azul-dim)]">
                         URL (optionnel)
                     </label>
                     <input
@@ -66,18 +66,18 @@ export default function CapturePage() {
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         placeholder="https://..."
-                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] px-4 py-3 text-sm outline-none focus:border-[var(--accent)]"
+                        className="focus-mark w-full bg-[var(--surface-dim)] px-4 py-3 text-sm text-[var(--azul)] placeholder:text-[var(--azul-dim)]"
                     />
                 </div>
 
-                <div>
-                    <label className="mb-1.5 block text-xs uppercase tracking-wide text-[var(--text-muted)]">
+                <div className="bg-[var(--surface)] p-5">
+                    <label className="mb-2 block text-xs uppercase tracking-wide text-[var(--azul-dim)]">
                         Nature de la source
                     </label>
                     <select
                         value={type}
                         onChange={(e) => setType(e.target.value)}
-                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] px-4 py-3 text-sm outline-none focus:border-[var(--accent)]"
+                        className="focus-mark w-full bg-[var(--surface-dim)] px-4 py-3 text-sm text-[var(--azul)]"
                     >
                         <option value="article">Article</option>
                         <option value="video">Vidéo</option>
@@ -87,8 +87,8 @@ export default function CapturePage() {
                     </select>
                 </div>
 
-                <div>
-                    <label className="mb-1.5 block text-xs uppercase tracking-wide text-[var(--text-muted)]">
+                <div className="bg-[var(--surface)] p-5">
+                    <label className="mb-2 block text-xs uppercase tracking-wide text-[var(--azul-dim)]">
                         Contenu
                     </label>
                     <textarea
@@ -97,33 +97,33 @@ export default function CapturePage() {
                         required
                         rows={8}
                         placeholder="Colle le texte de l'article, la transcription, ou décris ton idée…"
-                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] px-4 py-3 text-sm outline-none focus:border-[var(--accent)]"
+                        className="focus-mark w-full resize-none bg-[var(--surface-dim)] px-4 py-3 text-sm text-[var(--azul)] placeholder:text-[var(--azul-dim)]"
                     />
                 </div>
 
                 <button
                     type="submit"
                     disabled={loading || !rawContent.trim()}
-                    className="self-start rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50"
+                    className="focus-mark mt-4 self-start bg-[var(--terra)] px-6 py-3 text-sm font-medium uppercase tracking-wide text-[var(--paper)] transition hover:bg-[var(--azul)] disabled:opacity-50"
                 >
                     {loading ? "Qualification en cours…" : "Capturer"}
                 </button>
             </form>
 
             {error && (
-                <p className="mt-6 max-w-xl text-sm text-red-400">{error}</p>
+                <p className="mt-6 max-w-xl text-sm text-[var(--bad)]">{error}</p>
             )}
 
             {result && (
-                <div className="mt-8 max-w-xl rounded-2xl border border-[var(--border)] bg-[var(--bg-elevated)] p-6">
-                    <p className="mb-1 text-xs uppercase tracking-wide text-[var(--success)]">
+                <div className="mt-10 max-w-xl bg-[var(--surface)] p-6">
+                    <p className="mb-2 text-xs uppercase tracking-wide text-[var(--ok)]">
                         Rangé dans « {result.dossierSuggere} »
                     </p>
-                    <p className="font-display mb-2 text-lg">{result.republication.accroche}</p>
-                    <p className="text-sm text-[var(--text-muted)]">{result.republication.corps}</p>
+                    <p className="font-display mb-2 text-lg font-bold text-[var(--azul)]">{result.republication.accroche}</p>
+                    <p className="text-sm text-[var(--azul-dim)]">{result.republication.corps}</p>
                     <Link
                         href={`/dossiers/${encodeURIComponent(result.dossierSuggere)}`}
-                        className="mt-4 inline-block text-xs text-[var(--accent)] hover:underline"
+                        className="focus-mark mt-4 inline-block text-xs font-medium text-[var(--terra)] underline underline-offset-4"
                     >
                         Voir le dossier →
                     </Link>

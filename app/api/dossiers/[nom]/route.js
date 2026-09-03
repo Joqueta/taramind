@@ -11,6 +11,7 @@ export async function GET(req, { params }) {
                 tags: { include: { tag: true } },
                 source: true,
                 reactions: true,
+                actions: { include: { projet: true }, orderBy: { createdAt: "desc" } },
             },
             orderBy: { createdAt: "desc" },
         });

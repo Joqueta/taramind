@@ -7,12 +7,13 @@ generator client {
 }
 
 model Source {
-  id         String    @id @default(cuid())
-  url        String?
-  type       String
-  legitimite String
-  createdAt  DateTime  @default(now())
-  articles   Article[]
+  id                String    @id @default(cuid())
+  url               String?   @unique
+  type              String
+  legitimite        String
+  legitimiteNiveau  String?
+  createdAt         DateTime  @default(now())
+  articles          Article[]
 }
 
 model Article {
@@ -28,9 +29,29 @@ model Article {
   embedding         String?
   humeur            String?
   humeurSynthese    String?
+  interetScore      Int?
+  envoyeDigest      Boolean         @default(false)
   tags              TagOnArticle[]
   reactions         Reaction[]
+  actions           ActionLiee[]
   createdAt         DateTime        @default(now())
+}
+
+model Projet {
+  id        String       @id @default(cuid())
+  nom       String       @unique
+  actions   ActionLiee[]
+  createdAt DateTime     @default(now())
+}
+
+model ActionLiee {
+  id        String   @id @default(cuid())
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id])
+  projetId  String
+  projet    Projet   @relation(fields: [projetId], references: [id])
+  impact    String
+  createdAt DateTime @default(now())
 }
 
 model Reaction {
