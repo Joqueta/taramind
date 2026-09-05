@@ -21,7 +21,11 @@ export default function CapturePage() {
             const res = await fetch("/api/ingest", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url: url || undefined, type, rawContent }),
+                body: JSON.stringify({
+                    url: url || undefined,
+                    type,
+                    rawContent: url.trim() ? undefined : rawContent,
+                }),
             });
             const data = await res.json();
 
@@ -87,23 +91,25 @@ export default function CapturePage() {
                     </select>
                 </div>
 
-                <div className="bg-[var(--surface)] p-5">
-                    <label className="mb-2 block text-xs uppercase tracking-wide text-[var(--azul-dim)]">
-                        Contenu
-                    </label>
-                    <textarea
-                        value={rawContent}
-                        onChange={(e) => setRawContent(e.target.value)}
-                        required
-                        rows={8}
-                        placeholder="Colle le texte de l'article, la transcription, ou décris ton idée…"
-                        className="focus-mark w-full resize-none bg-[var(--surface-dim)] px-4 py-3 text-sm text-[var(--azul)] placeholder:text-[var(--azul-dim)]"
-                    />
-                </div>
+                {!url.trim() && (
+                    <div className="bg-[var(--surface)] p-5">
+                        <label className="mb-2 block text-xs uppercase tracking-wide text-[var(--azul-dim)]">
+                            Contenu
+                        </label>
+                        <textarea
+                            value={rawContent}
+                            onChange={(e) => setRawContent(e.target.value)}
+                            required
+                            rows={8}
+                            placeholder="Colle le texte de l'article, la transcription, ou décris ton idée…"
+                            className="focus-mark w-full resize-none bg-[var(--surface-dim)] px-4 py-3 text-sm text-[var(--azul)] placeholder:text-[var(--azul-dim)]"
+                        />
+                    </div>
+                )}
 
                 <button
                     type="submit"
-                    disabled={loading || !rawContent.trim()}
+                    disabled={loading || (!url.trim() && !rawContent.trim())}
                     className="focus-mark mt-4 self-start bg-[var(--terra)] px-6 py-3 text-sm font-medium uppercase tracking-wide text-[var(--paper)] transition hover:bg-[var(--azul)] disabled:opacity-50"
                 >
                     {loading ? "Qualification en cours…" : "Capturer"}
