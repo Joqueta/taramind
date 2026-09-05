@@ -33,7 +33,7 @@ de `lib/lmstudio.js`, ce qui a mené à un mauvais classement (un article Valora
 
 ## Design
 
-### 1. Nouveau module `lib/extract.js`
+### 1. Nouveau module `lib/extract.mjs`
 
 Exporte `extractPageContent(url)` :
 - `fetch(url)` avec timeout de 10s (`AbortController`) et un header `User-Agent` de navigateur
